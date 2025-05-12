@@ -1,54 +1,46 @@
 package pwproj;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
 public class Menu extends JFrame{
-	public static JTextArea editTextArea = new JTextArea("Type Here!");
-    public static JTextArea uneditTextArea = new JTextArea();
-public static void launchMenu() {
-	   // Creating instance of JFrame
-    JFrame frame = new JFrame();
+	private JFrame window;
+	
+	public void launchMenu() {
+		 benchmark browser = new benchmark();
+	    // Create the main frame
+        JFrame frame = new JFrame("Simple GUI Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 150);
 
-    // Creating instance of JButton
-    JButton button = new JButton("Launch Browser");
-    button.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-       	 benchmark window = new benchmark();
-       	window.launchBrowser();;
-        }
-    });
-    JTextField textField1 = new JTextField();
+        // Create a panel to hold components
+        JPanel panel = new JPanel(new GridLayout(3, 2));
 
- // Creating a text field with initial text
- JTextField textField2 = new JTextField("Initial Text");
+        // Create components
+        JLabel websiteName = new JLabel("Website:");
+        JTextField websiteField = new JTextField(10);
+        JLabel xpathLabel = new JLabel("Xpath:");
+        JTextField xpathField = new JTextField(10);
+        JButton greetButton = new JButton("Run Test");
 
- // Creating a text field with a specified number of columns
- JTextField textField3 = new JTextField(20);
+        // Add components to the panel
+        panel.add(websiteName);
+        panel.add(websiteField);
+        panel.add(xpathLabel);
+        panel.add(xpathField);
+        panel.add(greetButton);
 
- // Creating a text field with both initial text and columns
- JTextField textField4 = new JTextField("Initial Text", 20);
-    // x axis, y axis, width, height
-    button.setBounds(150, 200, 220, 50);
+        // Add action listener to the button
+        greetButton.addActionListener(e -> {
+            String website = websiteField.getText();
+            String xpath = xpathField.getText();
+             JOptionPane.showMessageDialog(frame, browser.launchBrowser(website, xpath),"The response time is in nanosecs", JOptionPane.INFORMATION_MESSAGE);
+        });
 
-    // adding button in JFrame
-    frame.add(button);
+        // Add the panel to the frame
+        frame.add(panel, BorderLayout.CENTER);
 
-    // 400 width and 500 height
-    frame.setSize(500, 600);
-
-    // using no layout managers
-    frame.setLayout(null);
-
-    // making the frame visible
-    frame.setVisible(true);
-}
+        // Set frame visibility
+        frame.setVisible(true);
+    }
 }
